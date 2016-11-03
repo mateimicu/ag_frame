@@ -15,7 +15,8 @@ PREFIX = "ag_frame.functions"
 FUNCTIONS = [
     "griewangks_function_8",
     "rastrigins_function_6",
-    "rosenbrocks_valley", 
+    "rosenbrocks_valley",
+    "six_hump_camel_back_function",
 ]
 
 
