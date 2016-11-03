@@ -19,3 +19,20 @@ class ToFewArguments(exceptions.FunctionException):
                             "to a AG Framework Function.")
 
         super(ToFewArguments, self).__init__(formated_msg)
+
+
+class FunctionValueError(exceptions.FunctionException):
+    """Exception for when we try to call a function with to few argumensts."""
+    MSG = ("Function {} needs for the {} arguments something"
+           " from dis inverval [{}, {}]")
+
+    def __init__(self, function_name=None, arg_poz=None, domain=None):
+        try:
+            formated_msg = self.MSG.format(function_name,
+                                           arg_poz,
+                                           domain[0], domain[1])
+        except (TypeError, IndexError):
+            formated_msg = ("To few arguments fiven "
+                            "to a AG Framework Function.")
+
+        super(FunctionValueError, self).__init__(formated_msg)

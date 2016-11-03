@@ -78,6 +78,13 @@ class Function(object):
             raise function_exceptions.ToFewArguments(function_name=self._name,
                                                      nr_args=self._nr_args,
                                                      given_nr_args=len(args))
+        for index, val in enumerate(args):
+            if not (self._args_domain[index][0] <= val
+                    <= self._args_domain[index][1]):
+                raise function_exceptions.FunctionValueError(
+                    function_name=self._name, arg_poz=index+1,
+                    domain=self._args_domain[index])
+
         return self.execute(*args)
 
     def add_specific_domain_restriction(self, arg, arg_domain):
