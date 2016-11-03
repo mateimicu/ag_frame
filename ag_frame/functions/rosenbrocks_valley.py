@@ -15,10 +15,13 @@ class GriewangksFunction8(base.Function):
     """Rosenbrock's valley (De Jong's function 2)."""
 
     def __init__(self):
+        local_mins = (
+            tuple([1, 1]),
+        )
         super(GriewangksFunction8, self).__init__(
             name="Rosenbrock's valley",
             nr_args=2, default_domain=(-2.048, 2.048),
-            local_min=[1, 1])
+            local_mins=local_mins)
 
     @classmethod
     def is_implemented(cls):
@@ -32,5 +35,4 @@ class GriewangksFunction8(base.Function):
             The arguments of the function.
         """
         # f2(x) = sum(100·(x(i+1)-x(i)^2)^2+(1-x(i))^2)
-        base = 100 * ((args[1] - args[0]**2)**2 + (1+args[0])**2)
-        return base
+        return 100 * ((args[1] - args[0]**2)**2 + (1+args[0])**2)

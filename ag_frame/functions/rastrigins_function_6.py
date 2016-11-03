@@ -15,10 +15,13 @@ class RastriginsFunction6(base.Function):
     """Rastrigin's function 6."""
 
     def __init__(self):
+        local_mins = (
+            tuple([0 for _ in range(6)]),
+        )
         super(RastriginsFunction6, self).__init__(
             name="Rastrigin's function 6",
             nr_args=6, default_domain=(-5.12, 5.12),
-            local_min=[0 for _ in range(6)])
+            local_mins=local_mins)
 
     @classmethod
     def is_implemented(cls):
@@ -33,10 +36,10 @@ class RastriginsFunction6(base.Function):
         """
         # f6(x)=10·n+sum(x(i)^2-10·cos(2·pi·x(i))), i=1:n; -5.12<=x(i)<=5.12.
 
-        base = 10 * (self._nr_args + 1)
+        base_value = 10 * (self._nr_args + 1)
 
         f_sum = 0
         for index, val in enumerate(args):
             f_sum = (val**2 - 10*math.cos(2*math.pi*val))
 
-        return base + f_sum
+        return base_value + f_sum

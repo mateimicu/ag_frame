@@ -18,7 +18,7 @@ class Function(object):
     Every function should implement this methods.
     """
 
-    def __init__(self, name, nr_args, default_domain, local_min):
+    def __init__(self, name, nr_args, default_domain, local_mins):
         """Initialize a function.
 
         Here we initialize a function with the proper informations.
@@ -34,14 +34,15 @@ class Function(object):
         :type default_domain: tuple
             Should be a tuple with this format (min, max).
         :param local_min:
-            A list or a tuple with the values for the arguments that
-            give the lowest value of the function.
-        :type local_min: list/tuple
+            A  tuple with the with one or multiple tuples
+            that contein the args that give the lowers value for
+            the function.
+        :type local_min: tuple
         """
         self._name = name
         self._nr_args = nr_args
         self._default_domain = default_domain
-        self._local_min = local_min
+        self._local_mins = local_mins
         self._args_domain = [default_domain for _ in range(self._nr_args)]
 
         # Add specific domain restriction
@@ -53,9 +54,9 @@ class Function(object):
         raise exceptions.FunctionNotImplemented("Not Implemented.")
 
     @property
-    def local_min(self):
+    def local_mins(self):
         """Return the local minimum for this function."""
-        return self._local_min
+        return self._local_mins
 
     @property
     def name(self):
