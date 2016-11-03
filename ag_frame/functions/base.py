@@ -6,6 +6,7 @@ import abc
 
 import six
 
+from ag_frame import exceptions
 from ag_frame.functions import exceptions as function_exceptions
 
 
@@ -19,6 +20,11 @@ class Function(object):
     def __init__(self, name, nr_args):
         self._name = name
         self._nr_args = nr_args
+
+    @classmethod
+    def is_implemented(cls):
+        """Check if the Clase is finnal."""
+        raise exceptions.FunctionNotImplemented("Not Implemented.")
 
     @property
     def name(self):
