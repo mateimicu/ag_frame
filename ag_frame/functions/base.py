@@ -36,7 +36,7 @@ class Function(object):
         self._name = name
         self._nr_args = nr_args
         self._default_domain = default_domain
-        self._args_domain = [None for _ in range(self._nr_args)]
+        self._args_domain = [default_domain for _ in range(self._nr_args)]
 
         # Add specific domain restriction
         self.prepare_domain_restrictions()
@@ -60,6 +60,11 @@ class Function(object):
     def nr_args(self):
         """Return the number of argument of the function."""
         return self._nr_args
+
+    @property
+    def get_domain_restrictions(self):
+        """Return a list with all the domain restrictions."""
+        return self._args_domain
 
     def __call__(self, *args):
         """This method return the value of this function for the given args.
