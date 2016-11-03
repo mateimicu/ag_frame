@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Rastrigin's function is based on function 1 with the addition of cosine
 modulation to produce many local minima. Thus, the
@@ -19,7 +20,8 @@ class RastriginsFunction6(base.Function):
             nr_args=6, default_domain=(-5.12, 5.12),
             local_min=[0 for _ in range(6)])
 
-    def is_implemented(self):
+    @classmethod
+    def is_implemented(cls):
         """Check if the Clase is finnal."""
         return True
 

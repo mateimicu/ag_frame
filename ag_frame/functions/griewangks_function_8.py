@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Base class for Mathematical functions.
 """
@@ -21,7 +22,8 @@ class GriewangksFunction8(base.Function):
             nr_args=8, default_domain=(-600, 600),
             local_min=[0 for _ in range(8)])
 
-    def is_implemented(self):
+    @classmethod
+    def is_implemented(cls):
         """Check if the Clase is finnal."""
         return True
 

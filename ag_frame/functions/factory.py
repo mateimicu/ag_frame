@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Factory that returns all functions fron the project that are finall.
 """
@@ -12,6 +13,8 @@ from ag_frame.functions import base
 
 PREFIX = "ag_frame.functions"
 FUNCTIONS = [
+    "griewangks_function_8",
+    "rastrigins_function_6",
 ]
 
 
@@ -25,9 +28,10 @@ def functions_factory():
             item = getattr(module, item)
             try:
                 if issubclass(item, base.Function):
-                    print("We got in ", item)
                     item.is_implemented()
-            except (exceptions.FunctionNotImplemented, TypeError):
+                    print("We got in ", item)
+            except (exceptions.FunctionNotImplemented, TypeError) as ex:
+                print(ex)
                 continue
 
             all_functions.append(item)
