@@ -17,3 +17,18 @@ class FunctionException(AGBaseException):
 class AlgorithmException(AGBaseException):
     """Base exception for the AG Framework Algorithms."""
     pass
+
+
+class AGNotImplemented(AGBaseException):
+    """Base exception for not implemented classes."""
+    pass
+
+
+class FunctionNotImplemented(AGNotImplemented):
+    """Exceptions for not implemented functions."""
+    pass
+
+
+class AlgorithmsNotImplemented(AGNotImplemented):
+    """Exceptions for not implemented Algorithms."""
+    pass
