@@ -18,7 +18,8 @@ class GriewangksFunction8(base.Function):
     def __init__(self):
         super(GriewangksFunction8, self).__init__(
             name="Griewangk's function 8",
-            nr_args=8, default_domain=(-600, 600))
+            nr_args=8, default_domain=(-600, 600),
+            local_min=[0 for _ in range(8)])
 
     def is_implemented(self):
         """Check if the Clase is finnal."""
@@ -36,6 +37,6 @@ class GriewangksFunction8(base.Function):
         f_prod = 1
         for index, val in enumerate(args):
             f_sum += (args[val] ** 2) / 4000
-            f_prod *= math.cos(args[val] / math.sqrt(index))
+            f_prod *= math.cos(args[val] / math.sqrt(index+1))
 
         return f_sum - f_prod + 1
