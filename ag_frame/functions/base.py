@@ -17,7 +17,7 @@ class Function(object):
     Every function should implement this methods.
     """
 
-    def __init__(self, name, nr_args, default_domain):
+    def __init__(self, name, nr_args, default_domain, local_min):
         """Initialize a function.
 
         Here we initialize a function with the proper informations.
@@ -32,10 +32,15 @@ class Function(object):
             The default domain for every argument.
         :type default_domain: tuple
             Should be a tuple with this format (min, max).
+        :param local_min:
+            A list or a tuple with the values for the arguments that
+            give the lowest value of the function.
+        :type local_min: list/tuple
         """
         self._name = name
         self._nr_args = nr_args
         self._default_domain = default_domain
+        self._local_min = local_min
         self._args_domain = [default_domain for _ in range(self._nr_args)]
 
         # Add specific domain restriction
@@ -45,6 +50,11 @@ class Function(object):
     def is_implemented(cls):
         """Check if the Clase is finnal."""
         raise exceptions.FunctionNotImplemented("Not Implemented.")
+
+    @property
+    def local_min(self):
+        """Return the local minimum for this function."""
+        return self._local_min
 
     @property
     def name(self):
