@@ -29,7 +29,6 @@ def functions_factory():
             try:
                 if issubclass(item, base.Function):
                     item.is_implemented()
-                    print("We got in ", item)
             except (exceptions.FunctionNotImplemented, TypeError) as ex:
                 print(ex)
                 continue
