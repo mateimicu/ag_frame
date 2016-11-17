@@ -8,7 +8,7 @@ import math
 from ag_frame.functions import base
 
 
-class GriewangksFunction8(base.Function):
+class GriewangksFunction(base.Function):
     """Griewangk's function 8.
 
     Griewangk's function is similar to Rastrigin's function.
@@ -16,13 +16,17 @@ class GriewangksFunction8(base.Function):
     the minima are regularly distributed.
     """
 
-    def __init__(self):
+    def __init__(self, dimensions=8):
+        """Initialize this function.
+
+        :param dimensions: The number of dimension ( The default one is 8 )
+        """
         local_mins = (
-            tuple([0 for _ in range(8)]),
+            tuple([0 for _ in range(dimensions)]),
         )
-        super(GriewangksFunction8, self).__init__(
+        super(GriewangksFunction, self).__init__(
             name="Griewangk's function 8",
-            nr_args=8, default_domain=(-600, 600),
+            nr_args=dimensions, default_domain=(-600, 600),
             local_mins=local_mins)
 
     @classmethod
@@ -41,7 +45,7 @@ class GriewangksFunction8(base.Function):
         f_sum = 0
         f_prod = 1
         for index, val in enumerate(args):
-            f_sum += (args[val] ** 2) / 4000
-            f_prod *= math.cos(args[val] / math.sqrt(index+1))
+            f_sum += (val ** 2) / 4000
+            f_prod *= math.cos(val / math.sqrt(index+1))
 
         return f_sum - f_prod + 1

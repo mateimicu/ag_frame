@@ -11,16 +11,20 @@ in assess the performance of optimization algorithms.
 from ag_frame.functions import base
 
 
-class GriewangksFunction8(base.Function):
-    """Rosenbrock's valley (De Jong's function 2)."""
+class RosenbrockValley(base.Function):
+    """Rosenbrock's valley."""
 
-    def __init__(self):
+    def __init__(self, dimensions=2):
+        """Initialize this function.
+
+        :param dimensions: The number of dimension ( The default one is 2 )
+        """
         local_mins = (
-            tuple([1, 1]),
+            tuple([0 for _ in range(dimensions)]),
         )
-        super(GriewangksFunction8, self).__init__(
+        super(RosenbrockValley, self).__init__(
             name="Rosenbrock's valley",
-            nr_args=2, default_domain=(-2.048, 2.048),
+            nr_args=dimensions, default_domain=(-2.048, 2.048),
             local_mins=local_mins)
 
     @classmethod
@@ -35,4 +39,7 @@ class GriewangksFunction8(base.Function):
             The arguments of the function.
         """
         # f2(x) = sum(100·(x(i+1)-x(i)^2)^2+(1-x(i))^2)
-        return 100 * ((args[1] - args[0]**2)**2 + (1+args[0])**2)
+        r_sum = 0
+        for index in range(len(args)-1):
+            r_sum += 100 * ((args[index+1] - args[index]**2)**2 +
+                            (1+args[index])**2)

@@ -11,16 +11,20 @@ import math
 from ag_frame.functions import base
 
 
-class RastriginsFunction6(base.Function):
-    """Rastrigin's function 6."""
+class RastriginsFunction(base.Function):
+    """Rastrigin's function ."""
 
-    def __init__(self):
+    def __init__(self, dimensions=6):
+        """Initialize this function.
+
+        :param dimensions: The number of dimension ( The default one is 6 )
+        """
         local_mins = (
-            tuple([0 for _ in range(6)]),
+            tuple([0 for _ in range(dimensions)]),
         )
-        super(RastriginsFunction6, self).__init__(
+        super(RastriginsFunction, self).__init__(
             name="Rastrigin's function 6",
-            nr_args=6, default_domain=(-5.12, 5.12),
+            nr_args=dimensions, default_domain=(-5.12, 5.12),
             local_mins=local_mins)
 
     @classmethod
@@ -39,7 +43,7 @@ class RastriginsFunction6(base.Function):
         base_value = 10 * (self._nr_args + 1)
 
         f_sum = 0
-        for index, val in enumerate(args):
+        for val in args:
             f_sum = (val**2 - 10*math.cos(2*math.pi*val))
 
         return base_value + f_sum

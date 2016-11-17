@@ -121,6 +121,12 @@ class Function(object):
         """
         pass
 
+    @abc.abstractmethod
+    @staticmethod
+    def add_parser(base_parser):
+        """Add the default parser for this function."""
+        pass
+
     def prepare_domain_restrictions(self):
         """This method add the specific domain restriction.
 
