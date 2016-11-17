@@ -42,4 +42,5 @@ class RosenbrockValley(base.Function):
         r_sum = 0
         for index in range(len(args)-1):
             r_sum += 100 * ((args[index+1] - args[index]**2)**2 +
-                            (1+args[index])**2)
+                            (1-args[index])**2)
+        return r_sum

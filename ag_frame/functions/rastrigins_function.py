@@ -23,7 +23,7 @@ class RastriginsFunction(base.Function):
             tuple([0 for _ in range(dimensions)]),
         )
         super(RastriginsFunction, self).__init__(
-            name="Rastrigin's function 6",
+            name="Rastrigin's function",
             nr_args=dimensions, default_domain=(-5.12, 5.12),
             local_mins=local_mins)
 
@@ -45,6 +45,5 @@ class RastriginsFunction(base.Function):
         f_sum = 0
         for val in args:
             f_sum += (val**2 - 10*math.cos(2*math.pi*val))
-            print("f = ", f_sum)
 
         return base_value + f_sum

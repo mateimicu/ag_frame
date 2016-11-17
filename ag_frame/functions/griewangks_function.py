@@ -25,7 +25,7 @@ class GriewangksFunction(base.Function):
             tuple([0 for _ in range(dimensions)]),
         )
         super(GriewangksFunction, self).__init__(
-            name="Griewangk's function 8",
+            name="Griewangk's function",
             nr_args=dimensions, default_domain=(-600, 600),
             local_mins=local_mins)
 
