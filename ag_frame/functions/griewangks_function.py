@@ -4,7 +4,6 @@
 Base class for Mathematical functions.
 """
 import math
-from six.moves import argparse
 
 from ag_frame.functions import base
 
