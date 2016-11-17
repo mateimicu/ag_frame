@@ -35,6 +35,15 @@ class SixHumpCamelBackFunction(base.Function):
         """Check if the Clase is finnal."""
         return True
 
+    @staticmethod
+    def add_parser(base_parser):
+        """Add the default parser for this function.
+
+        :param parser: The top-level parser
+        """
+        # NOTE(mmicu): For this function we don't have dimensions
+        pass
+
     def execute(self, *args):
         """This method return the value of this function for the given args.
 

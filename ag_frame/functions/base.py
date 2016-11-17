@@ -121,11 +121,17 @@ class Function(object):
         """
         pass
 
-    @abc.abstractmethod
     @staticmethod
     def add_parser(base_parser):
-        """Add the default parser for this function."""
-        pass
+        """Add the default parser for this function.
+
+        :param parser: The top-level parser
+        """
+        subparsers = base_parser.add_subparsers(
+            help="Command for the Griewangk's Function")
+        parser_run = subparsers.add_parser("run", help="Run this function.")
+        parser_run.add_argument("-d", "--dimensions", type=int,
+                                help="The number of dimensions.")
 
     def prepare_domain_restrictions(self):
         """This method add the specific domain restriction.
