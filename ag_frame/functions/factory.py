@@ -13,8 +13,8 @@ from ag_frame.functions import base
 
 PREFIX = "ag_frame.functions"
 FUNCTIONS = [
-    "griewangks_function_8",
-    "rastrigins_function_6",
+    "griewangks_function",
+    "rastrigins_function",
     "rosenbrocks_valley",
     "six_hump_camel_back_function",
 ]
