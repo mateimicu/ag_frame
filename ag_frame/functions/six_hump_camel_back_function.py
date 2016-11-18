@@ -10,7 +10,7 @@ from ag_frame.functions import base
 
 class SixHumpCamelBackFunction(base.Function):
     """Six-hump camel back function."""
-    _name = "Rosenbrock's valley"
+    _name = "Six-hump camel back"
 
     def __init__(self):
         local_mins = (
