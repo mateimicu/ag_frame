@@ -36,7 +36,6 @@ class NAHC(base.Algorithm):
         global_best = None
         retry = self.max_retry
         while retry > 0:
-            print("R", retry)
             big_string = '0' * sum(self.size_var)
             big_string = utils.randomise_a_string(big_string)
 
@@ -53,6 +52,7 @@ class NAHC(base.Algorithm):
 
                 if f_new < f_best:
                     best = new
+
             retry -= 1
             # Base case when there is no global_best
             if global_best is None:

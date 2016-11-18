@@ -34,27 +34,32 @@ class SAHC(base.Algorithm):
             self.size_var.append(size)
 
         global_best = None
-        best_found = False
         retry = self.max_retry
         while retry > 0:
             big_string = '0' * sum(self.size_var)
             big_string = utils.randomise_a_string(big_string)
 
-            best = big_string if not best_found else global_best
-            best_found = False
+            best = big_string
             new = best
-            for i in range(len(big_string)):
-                new = utils.mutate(best, i)
+            base_g = best  # cui ii caut vecini
+            found = True
 
-                args_best = self.string_to_args(best)
-                args_new = self.string_to_args(new)
+            while found:
+                found = False
+                for i in range(len(big_string)):
+                    new = utils.mutate(base_g, i)  # Generam vecinul(i)
 
-                f_best = function(*args_best)
-                f_new = function(*args_new)
+                    args_best = self.string_to_args(best)
+                    args_new = self.string_to_args(new)
 
-                if f_new < f_best:
-                    best = new
-                    break
+                    f_best = function(*args_best)
+                    f_new = function(*args_new)
+
+                    if f_new < f_best:
+                        best = new
+                        found = True
+                base_g = best
+
             retry -= 1
             # Base case when there is no global_best
             if global_best is None:
@@ -66,6 +71,5 @@ class SAHC(base.Algorithm):
             args_best = self.string_to_args(best)
             if function(*args_best) < function(*args_global_best):
                 global_best = best
-                best_found = True
 
         return self.string_to_args(global_best)
