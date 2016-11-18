@@ -10,6 +10,7 @@ from ag_frame.functions import base
 
 class SixHumpCamelBackFunction(base.Function):
     """Six-hump camel back function."""
+    _name = "Rosenbrock's valley"
 
     def __init__(self):
         local_mins = (
@@ -17,7 +18,6 @@ class SixHumpCamelBackFunction(base.Function):
             (0.0898, -0.7126)
         )
         super(SixHumpCamelBackFunction, self).__init__(
-            name="Rosenbrock's valley",
             nr_args=2, default_domain=(-3, 3),
             local_mins=local_mins)
 
@@ -35,14 +35,14 @@ class SixHumpCamelBackFunction(base.Function):
         """Check if the Clase is finnal."""
         return True
 
-    @staticmethod
-    def add_parser(base_parser):
+    @classmethod
+    def add_parser(cls, base_parser):
         """Add the default parser for this function.
 
         :param parser: The top-level parser
         """
-        # NOTE(mmicu): For this function we don't have dimensions
-        pass
+        cls.parser = base_parser.add_parser(cls.name(),
+                                            help="Run this function.")
 
     def execute(self, *args):
         """This method return the value of this function for the given args.

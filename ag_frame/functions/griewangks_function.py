@@ -16,23 +16,33 @@ class GriewangksFunction(base.Function):
     the minima are regularly distributed.
     """
 
-    def __init__(self, dimensions=8):
+    _name = "Griewangk's function"
+
+    def __init__(self):
         """Initialize this function.
 
         :param dimensions: The number of dimension ( The default one is 8 )
         """
         local_mins = (
-            tuple([0 for _ in range(dimensions)]),
+            tuple([0 for _ in range(self._args.dimensions)]),
         )
         super(GriewangksFunction, self).__init__(
-            name="Griewangk's function",
-            nr_args=dimensions, default_domain=(-600, 600),
+            nr_args=self._args.dimensions, default_domain=(-600, 600),
             local_mins=local_mins)
 
     @classmethod
     def is_implemented(cls):
         """Check if the Clase is finnal."""
         return True
+
+    @classmethod
+    def add_parser(cls, base_parser):
+        """Add the default parser for this function.
+
+        :param parser: The top-level parser
+        """
+        super(GriewangksFunction, cls).add_parser(base_parser)
+        cls.parser.set_defaults(dimensions=8)
 
     def execute(self, *args):
         """This method return the value of this function for the given args.

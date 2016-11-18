@@ -14,23 +14,30 @@ from ag_frame.functions import base
 class RosenbrockValley(base.Function):
     """Rosenbrock's valley."""
 
-    def __init__(self, dimensions=2):
-        """Initialize this function.
+    _name = "Rosenbrock's valley"
 
-        :param dimensions: The number of dimension ( The default one is 2 )
-        """
+    def __init__(self):
+        """Initialize this function."""
         local_mins = (
-            tuple([0 for _ in range(dimensions)]),
+            tuple([0 for _ in range(self._args.dimensions)]),
         )
         super(RosenbrockValley, self).__init__(
-            name="Rosenbrock's valley",
-            nr_args=dimensions, default_domain=(-2.048, 2.048),
+            nr_args=self._args.dimensions, default_domain=(-2.048, 2.048),
             local_mins=local_mins)
 
     @classmethod
     def is_implemented(cls):
         """Check if the Clase is finnal."""
         return True
+
+    @classmethod
+    def add_parser(cls, base_parser):
+        """Add the default parser for this function.
+
+        :param parser: The top-level parser
+        """
+        super(RosenbrockValley, cls).add_parser(base_parser)
+        cls.parser.set_defaults(dimensions=2)
 
     def execute(self, *args):
         """This method return the value of this function for the given args.

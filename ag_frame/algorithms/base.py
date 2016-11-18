@@ -4,6 +4,7 @@
 Base class for Mathematical functions.
 """
 import abc
+import argparse
 
 import six
 
@@ -19,15 +20,16 @@ class Algorithm(object):
     Every function should implement this methods.
     """
 
-    def __init__(self, name):
+    _name = "Basic Algorithm"
+    _parser = None
+    _subparser = None
+    _args = None
+
+    def __init__(self):
         """Initialize an Algorithm.
 
         Here we initialize an Algorithm with the proper informations.
-
-        :param name:
-            The name of the Algorithm
         """
-        self._name = name
         # TODO(mmicu): add more custom values for each alg
 
     @classmethod
@@ -35,15 +37,15 @@ class Algorithm(object):
         """Check if the Clase is finnal."""
         raise exceptions.AlgorithmsNotImplemented("Not Implemented.")
 
-    @property
-    def name(self):
+    @classmethod
+    def name(cls):
         """Return the name of the function in a standard format."""
-        return self._name.replace(" ", "_").lower()
+        return cls._name.replace(" ", "_").lower()
 
-    @property
-    def pretty_name(self):
+    @classmethod
+    def pretty_name(cls):
         """Return the name of the function in a pretty format."""
-        return self._name
+        return cls._name
 
     def string_to_args(self, new):
         """Convert a binary string to a list of arguments.
@@ -54,13 +56,19 @@ class Algorithm(object):
                                     self.domains,
                                     self.precision)
 
-    @staticmethod
-    def add_parser(base_parser):
+    @classmethod
+    def add_parser(cls, base_parser, functions_list):
         """Add the apropiate subparser.
 
         :param base_parser: The Top-Level parser.
+        :param functions_list: the list with functions.
         """
-        pass
+        cls._parser = base_parser.add_parser(
+            cls.name(), help="Use this Algorithm.")
+        cls._subparser = cls._parser.add_subparsers(
+            help="Use this Function.", dest="func")
+        for function in functions_list:
+            function.add_parser(cls._subparser)
 
     def __call__(self, function):
         """This method will be called to run the algorithm.

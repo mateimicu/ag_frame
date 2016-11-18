@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Steepest Ascent Hill Climbing
 Simulated Annealing
 """
 import random
@@ -12,8 +11,11 @@ from ag_frame.algorithms import utils
 
 class SA(base.Algorithm):
     """Simulated Annealing."""
+
+    _name = "Simulated Annealing"
+
     def __init__(self):
-        super(SA, self).__init__(name="Simulated Annealing")
+        super(SA, self).__init__()
         self.size_var = []
         self.domains = None
         self.precision = 40

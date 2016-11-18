@@ -17,15 +17,16 @@ class Function(object):
 
     Every function should implement this methods.
     """
+    _name = "Function"
+    _parser = None
+    _subparser = None
+    _args = None
 
-    def __init__(self, name, nr_args, default_domain, local_mins):
+    def __init__(self, nr_args, default_domain, local_mins):
         """Initialize a function.
 
         Here we initialize a function with the proper informations.
 
-        :param name:
-            The name of the function
-        :type name: str
         :param nr_args:
             Number of argumensts.
         :type nr_args: int
@@ -39,7 +40,6 @@ class Function(object):
             the function.
         :type local_min: tuple
         """
-        self._name = name
         self._nr_args = nr_args
         self._default_domain = default_domain
         self._local_mins = local_mins
@@ -58,15 +58,15 @@ class Function(object):
         """Return the local minimum for this function."""
         return self._local_mins
 
-    @property
-    def name(self):
+    @classmethod
+    def name(cls):
         """Return the name of the function in a standard format."""
-        return self._name.replace(" ", "_").lower()
+        return cls._name.replace(" ", "_").replace("'", "").lower()
 
-    @property
-    def pretty_name(self):
+    @classmethod
+    def pretty_name(cls):
         """Return the name of the function in a pretty format."""
-        return self._name
+        return cls._name
 
     @property
     def nr_args(self):
@@ -121,16 +121,15 @@ class Function(object):
         """
         pass
 
-    @staticmethod
-    def add_parser(base_parser):
+    @classmethod
+    def add_parser(cls, base_parser):
         """Add the default parser for this function.
 
         :param parser: The top-level parser
         """
-        subparsers = base_parser.add_subparsers(
-            help="Command for the Griewangk's Function")
-        parser_run = subparsers.add_parser("run", help="Run this function.")
-        parser_run.add_argument("-d", "--dimensions", type=int,
+        cls.parser = base_parser.add_parser(cls.name(),
+                                            help="Run this function.")
+        cls.parser.add_argument("-d", "--dimensions", type=int,
                                 help="The number of dimensions.")
 
     def prepare_domain_restrictions(self):

@@ -9,8 +9,11 @@ from ag_frame.algorithms import utils
 
 class NAHC(base.Algorithm):
     """Next Ascent Hill Climbing."""
+
+    _name = "Next Ascent Hill Climbing"
+
     def __init__(self):
-        super(NAHC, self).__init__(name="Next Ascent Hill Climbing")
+        super(NAHC, self).__init__()
         self.size_var = []
         self.domains = None
         self.precision = 100

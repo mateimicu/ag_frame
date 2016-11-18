@@ -31,8 +31,7 @@ def functions_factory():
             try:
                 if issubclass(item, base.Function):
                     item.is_implemented()
-            except (exceptions.FunctionNotImplemented, TypeError) as ex:
-                print(ex)
+            except (exceptions.FunctionNotImplemented, TypeError):
                 continue
 
             all_functions.append(item)

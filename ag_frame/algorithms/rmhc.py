@@ -10,21 +10,14 @@ from ag_frame.algorithms import utils
 class RMHC(base.Algorithm):
     """Random Mutation Hill Climbing."""
 
+    _name = "Random Mutation Hill Climbing"
+
     def __init__(self):
-        super(RMHC, self).__init__(name="Random Mutation Hill Climbing")
+        super(RMHC, self).__init__()
         self.size_var = []
         self.domains = None
         self.precision = 300
         self.max_retry = 10000
-
-    @staticmethod
-    def add_parser(base_parser):
-        """Add the apropiate subparser.
-
-        :param base_parser: The Top-Level parser.
-        """
-        # TODO(mmoicu): Add an options to set the precision
-        pass
 
     @classmethod
     def is_implemented(cls):

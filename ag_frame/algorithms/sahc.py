@@ -9,8 +9,11 @@ from ag_frame.algorithms import utils
 
 class SAHC(base.Algorithm):
     """Steepest Ascent Hill Climbing."""
+
+    _name = "Steepest Ascent Hill Climbing"
+
     def __init__(self):
-        super(SAHC, self).__init__(name="Steepest Ascent Hill Climbing")
+        super(SAHC, self).__init__()
         self.size_var = []
         self.domains = None
         self.precision = 40
