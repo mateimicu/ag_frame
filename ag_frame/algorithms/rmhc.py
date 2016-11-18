@@ -16,8 +16,8 @@ class RMHC(base.Algorithm):
         super(RMHC, self).__init__()
         self.size_var = []
         self.domains = None
-        self.precision = 300
-        self.max_retry = 10000
+        self.precision = self._args.precision
+        self.max_retry = self._args.max_retry
 
     @classmethod
     def is_implemented(cls):

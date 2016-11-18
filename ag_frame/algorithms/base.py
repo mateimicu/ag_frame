@@ -70,6 +70,14 @@ class Algorithm(object):
         for function in functions_list:
             function.add_parser(cls._subparser)
 
+        cls._parser.add_argument(
+            "-p", "--precision", type=int,
+            help="The precision of the guesses.")
+        cls._parser.add_argument(
+            "-m", "--max_retry", type=int,
+            help="How many times we should retry (100 default).")
+        cls._parser.set_defaults(max_retry=100, precision=30)
+
     def __call__(self, function):
         """This method will be called to run the algorithm.
 

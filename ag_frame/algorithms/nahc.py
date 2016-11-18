@@ -16,8 +16,8 @@ class NAHC(base.Algorithm):
         super(NAHC, self).__init__()
         self.size_var = []
         self.domains = None
-        self.precision = 100
-        self.max_retry = 300
+        self.precision = self._args.precision
+        self.max_retry = self._args.max_retry
 
     @classmethod
     def is_implemented(cls):

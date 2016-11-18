@@ -18,15 +18,31 @@ class SA(base.Algorithm):
         super(SA, self).__init__()
         self.size_var = []
         self.domains = None
-        self.precision = 40
-        self.temperature = .9
-        self.step = 0.3
-        self.max_retry = 100
+        self.precision = self._args.precision
+        self.max_retry = self._args.max_retry
+        self.temperature = self._args.temperature
+        self.step = self._args.step
 
     @classmethod
     def is_implemented(cls):
         """Check if the Clase is finnal."""
         return True
+
+    @classmethod
+    def add_parser(cls, base_parser, functions_list):
+        """Add the apropiate subparser.
+
+        :param base_parser: The Top-Level parser.
+        :param functions_list: the list with functions.
+        """
+        super(SA, cls).add_parser(base_parser, functions_list)
+        cls._parser.add_argument(
+            "-t", "--temperature", type=float,
+            help="The starting temperature [0, 1] (default 0.9)")
+        cls._parser.add_argument(
+            "-s", "--step", type=float,
+            help="The step temperature (0, 1) (default 0.3)")
+        cls._parser.set_defaults(temperature=.9, step=.3)
 
     def execute(self, function):
         """The algorithm implementation."""
@@ -45,9 +61,7 @@ class SA(base.Algorithm):
 
         # NOTE(mmicu): Truncate the temperature to 4 decimal places
         while float("%.4f" % temperature) > 0:
-            print("Tempt :", temperature)
             for i in range(self.max_retry):
-                print("Int :", i)
                 new = '0' * sum(self.size_var)
                 new = utils.randomise_a_string(big_string)
 

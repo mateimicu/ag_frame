@@ -16,8 +16,8 @@ class SAHC(base.Algorithm):
         super(SAHC, self).__init__()
         self.size_var = []
         self.domains = None
-        self.precision = 40
-        self.max_retry = 500
+        self.precision = self._args.precision
+        self.max_retry = self._args.max_retry
 
     @classmethod
     def is_implemented(cls):

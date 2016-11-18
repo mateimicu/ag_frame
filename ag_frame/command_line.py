@@ -47,7 +47,7 @@ def main():
             break
 
     # Run the algorithm on the function
-    print("Running {} and optimizing {}".format(
+    print("Running {} and optimizing {}...".format(
           algorithm.pretty_name(), function.pretty_name()))
     rezultat = algorithm(function)
     print("Output: {!r}".format(rezultat))
