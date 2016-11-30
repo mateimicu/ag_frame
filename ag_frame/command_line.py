@@ -20,6 +20,10 @@ def add_subparsers(base, elements, functions):
         element.add_parser(base, functions)
 
 
+def _format_output(output_args):
+    """Format output for a csv format."""
+    return ", ".join([str(item) for item in output_args])
+
 def main():
     """The main function for this mini-framework."""
     parser = prepare_parser()
@@ -47,7 +51,7 @@ def main():
             break
 
     # Run the algorithm on the function
-    print("Running {} and optimizing {}...".format(
-          algorithm.pretty_name(), function.pretty_name()))
+    # print("Running {} and optimizing {}...".format(
+    #       algorithm.pretty_name(), function.pretty_name()))
     rezultat = algorithm(function)
-    print("Output: {!r}".format(rezultat))
+    print(_format_output(rezultat))
