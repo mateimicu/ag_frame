@@ -7,12 +7,13 @@ import abc
 
 import six
 
+from ag_frame import base_item
 from ag_frame import exceptions
 from ag_frame.functions import exceptions as function_exceptions
 
 
 @six.add_metaclass(abc.ABCMeta)
-class Function(object):
+class Function(base_item.BaseItem):
     """Base class for every function.
 
     Every function should implement this methods.
@@ -20,7 +21,6 @@ class Function(object):
     _name = "Function"
     _parser = None
     _subparser = None
-    _args = None
 
     def __init__(self, nr_args, default_domain, local_mins):
         """Initialize a function.

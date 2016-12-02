@@ -4,6 +4,7 @@ from __future__ import print_function
 
 from ag_frame.algorithms import factory as a_facotry
 from ag_frame.functions import factory as f_factory
+from ag_frame.runners import run_alg
 
 import argparse
 
@@ -14,44 +15,13 @@ def prepare_parser():
     return parser
 
 
-def add_subparsers(base, elements, functions):
-    """Add the subparsers."""
-    for element in elements:
-        element.add_parser(base, functions)
-
-
-def _format_output(output_args):
-    """Format output for a csv format."""
-    return ", ".join([str(item) for item in output_args])
-
 def main():
     """The main function for this mini-framework."""
     parser = prepare_parser()
-    subparsers = parser.add_subparsers(help="Run this function as you want.",
-                                       dest="alg")
+    subparsers = parser.add_subparsers(help="Choose a runner.")
     algorithms = a_facotry.algorithms_factory()
     functions = f_factory.functions_factory()
-    add_subparsers(subparsers, algorithms, functions)
 
-    # parser args
-    args = parser.parse_args()
-    for item in algorithms + functions:
-        item._args = args
-
-    # choose algorithm and function
-    algorithm = None
-    function = None
-    for alg in algorithms:
-        if alg.name() == args.alg:
-            algorithm = alg()
-            break
-    for func in functions:
-        if func.name() == args.func:
-            function = func()
-            break
-
-    # Run the algorithm on the function
-    # print("Running {} and optimizing {}...".format(
-    #       algorithm.pretty_name(), function.pretty_name()))
-    rezultat = algorithm(function)
-    print(_format_output(rezultat))
+    base_runner = run_alg.RunAlgorithm(parser, subparsers, 
+            algorithms, functions)
+    base_runner.evaluate()

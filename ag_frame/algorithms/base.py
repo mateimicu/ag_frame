@@ -9,12 +9,13 @@ import argparse
 import six
 
 from ag_frame.algorithms import utils
+from ag_frame import base_item
 from ag_frame import exceptions
 from ag_frame.functions import base
 
 
 @six.add_metaclass(abc.ABCMeta)
-class Algorithm(object):
+class Algorithm(base_item.BaseItem):
     """Base class for every function.
 
     Every function should implement this methods.
@@ -23,7 +24,6 @@ class Algorithm(object):
     _name = "Basic Algorithm"
     _parser = None
     _subparser = None
-    _args = None
 
     def __init__(self):
         """Initialize an Algorithm.
