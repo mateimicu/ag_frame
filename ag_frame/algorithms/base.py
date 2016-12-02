@@ -31,6 +31,8 @@ class Algorithm(object):
         Here we initialize an Algorithm with the proper informations.
         """
         # TODO(mmicu): add more custom values for each alg
+        self.precision = self._args.precision
+        self.max_retry = self._args.max_retry
 
     @classmethod
     def is_implemented(cls):
@@ -64,7 +66,7 @@ class Algorithm(object):
         :param functions_list: the list with functions.
         """
         cls._parser = base_parser.add_parser(
-            cls.name(), help="Use this Algorithm.")
+            cls.name(), help="Use {}.".format(cls.pretty_name()))
         cls._subparser = cls._parser.add_subparsers(
             help="Use this Function.", dest="func")
         for function in functions_list:
@@ -78,16 +80,39 @@ class Algorithm(object):
             help="How many times we should retry (100 default).")
         cls._parser.set_defaults(max_retry=100, precision=30)
 
+    def _prepare_size_var(self, function):
+        """Prepare the size of every var."""
+        self.size_var = []
+
+        for index in range(function.nr_args):
+            size = utils.get_nr_bits(self.domains[index], self.precision)
+            self.size_var.append(size)
+
     def __call__(self, function):
         """This method will be called to run the algorithm.
 
         :param function:
             A `ag_frame.function.base.Function` instance.
         """
-        # TODO(mmicu): implement a algorithm exception here
+
         if not isinstance(function, base.Function):
             raise ValueError("We don't know this function %s.", function)
-        return self.execute(function)
+
+        global_best = None
+        retry = self.max_retry
+        while retry > 0:
+            # Run the algorithm
+            best = self.execute(function)
+
+            if not global_best:
+                global_best = best
+                continue
+
+            # Compera the global_best with the new generated best
+            if function(*best) < function(*global_best):
+                global_best = best
+            retry -= 1
+        return global_best
 
     @abc.abstractmethod
     def execute(self, function):

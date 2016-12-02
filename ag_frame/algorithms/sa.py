@@ -18,8 +18,6 @@ class SA(base.Algorithm):
         super(SA, self).__init__()
         self.size_var = []
         self.domains = None
-        self.precision = self._args.precision
-        self.max_retry = self._args.max_retry
         self.temperature = self._args.temperature
         self.step = self._args.step
 
@@ -61,21 +59,20 @@ class SA(base.Algorithm):
 
         # NOTE(mmicu): Truncate the temperature to 4 decimal places
         while float("%.4f" % temperature) > 0:
-            for i in range(self.max_retry):
-                new = '0' * sum(self.size_var)
-                new = utils.randomise_a_string(big_string)
+            new = '0' * sum(self.size_var)
+            new = utils.randomise_a_string(big_string)
 
-                args_new = self.string_to_args(new)
-                args_global_best = self.string_to_args(global_best)
+            args_new = self.string_to_args(new)
+            args_global_best = self.string_to_args(global_best)
 
-                f_new = function(*args_new)
-                f_global = function(*args_global_best)
-                if f_new < f_global:
+            f_new = function(*args_new)
+            f_global = function(*args_global_best)
+            if f_new < f_global:
+                global_best = new
+            else:
+                probability = random.random()
+                if probability < ((f_global - f_new) / temperature) ** 2:
                     global_best = new
-                else:
-                    probability = random.random()
-                    if probability < ((f_global - f_new) / temperature) ** 2:
-                        global_best = new
             temperature *= self.step
 
         return self.string_to_args(global_best)

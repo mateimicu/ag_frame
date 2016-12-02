@@ -14,31 +14,39 @@ class RMHC(base.Algorithm):
 
     def __init__(self):
         super(RMHC, self).__init__()
-        self.size_var = []
         self.domains = None
-        self.precision = self._args.precision
-        self.max_retry = self._args.max_retry
 
     @classmethod
     def is_implemented(cls):
         """Check if the Clase is finnal."""
         return True
 
+    @classmethod
+    def add_parser(cls, base_parser, functions_list):
+        """Add the apropiate subparser.
+
+        :param base_parser: The Top-Level parser.
+        :param functions_list: the list with functions.
+        """
+        super(RMHC, cls).add_parser(base_parser, functions_list)
+        cls._parser.add_argument(
+            "-r", "--random_try", type=int,
+            help="How many times we should try a random guess"
+            " for a single run.")
+        cls._parser.set_defaults(random_try=100)
+
     def execute(self, function):
         """The algorithm implementation."""
         self.domains = function.get_domain_restrictions
 
-        for index in range(function.nr_args):
-            size = utils.get_nr_bits(self.domains[index], self.precision)
-            self.size_var.append(size)
+        self._prepare_size_var(function)
 
         big_string = '0' * sum(self.size_var)
         big_string = utils.randomise_a_string(big_string)
 
         best = big_string
         new = best
-        retry = self.max_retry
-
+        retry = self._args.random_try
         while retry >= 0:
             new = utils.mutate_random(best)
 
@@ -50,7 +58,7 @@ class RMHC(base.Algorithm):
 
             if f_new < f_best:
                 best = new  # get a new best
-                retry = self.max_retry  # reset the retry
+                retry = self._args.random_try  # reset the retry
             else:
                 retry -= 1
         return self.string_to_args(best)
