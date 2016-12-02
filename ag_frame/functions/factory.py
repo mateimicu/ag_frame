@@ -17,6 +17,7 @@ FUNCTIONS = [
     "rastrigins_function",
     "rosenbrocks_valley",
     "six_hump_camel_back_function",
+    "tema_1_prim_function",
 ]
 
 
