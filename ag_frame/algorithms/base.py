@@ -4,7 +4,6 @@
 Base class for Mathematical functions.
 """
 import abc
-import argparse
 
 import six
 
