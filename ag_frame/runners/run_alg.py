@@ -5,6 +5,7 @@ Runner that let's you run a specific algorithm with a specific function.
 
 from __future__ import print_function
 
+
 from ag_frame.runners import base
 from ag_frame.runners import utils
 
@@ -39,25 +40,41 @@ class RunAlgorithm(base.BaseRunner):
         self._parser = self._subparsers.add_parser(
             self._name,
             help="Run and algorithm on a specific function.",)
+        self._parser.add_argument(
+            "-o", "--output", type=str,
+            help="Where to save the output(default: print it).")
+        self._parser.add_argument(
+            "-f", "--format", choices=utils.CHOICES,
+            help="Format of the output, csv, json, xml.\n"
+            "! Only csv supported for now !")
+        self._parser.set_defaults(format=utils.CSV)
         subparsers = self._parser.add_subparsers(dest="alg")
         return subparsers
 
-    def evaluate(self):
-        """Evaluate the arguments and run something if needed."""
-        args = self._base_parser.parse_args()
-        for item in self._algorithms + self._functions:
-            item.set_args(args)
+    def save(self, rezultat):
+        """Save the output of the run."""
+        format_rezult = utils.format_output(rezultat, self._args.format)
 
+        if not self._args.output:
+            print(format_rezult)
+            return
+
+        with open(self._args.output, "w+") as output:
+            output.write(format_rezult)
+
+    def _evaluate(self):
+        """Evaluate the arguments and run something if needed."""
         # choose algorithm and function
         algorithm = None
         function = None
         for alg in self._algorithms:
-            if alg.name() == args.alg:
+            if alg.name() == self._args.alg:
                 algorithm = alg()
                 break
         for func in self._functions:
-            if func.name() == args.func:
+            if func.name() == self._args.func:
                 function = func()
                 break
+
         rezultat = algorithm(function)
-        print(utils.format_output(rezultat))
+        self.save(rezultat)

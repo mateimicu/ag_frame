@@ -29,4 +29,8 @@ To Do(enchanting):
 - Add some logging method with verbosity level
 - Add an option for seeding the random function (for debuging)
 - Try to use `numpy` to speed up the runs
+- Integrate pylint and flake8 with tox
+- Add a CI for this project
+- Implement the other output methods(json, xml)
+- Implement and append and rewrite mode for the output
 

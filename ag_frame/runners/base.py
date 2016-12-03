@@ -30,6 +30,8 @@ class BaseRunner(object):
 
         self.__add_functions_to_algorithms()
 
+        self._args = None
+
     def _get_name(self):
         """Get the name of this runner."""
         return self.__class__.__name__
@@ -42,8 +44,25 @@ class BaseRunner(object):
     @abc.abstractmethod
     def _add_subparser(self):
         """Add the subparser for this runner."""
+        pass
 
     @abc.abstractmethod
+    def save(self, rezultat):
+        """Save the output of the run."""
+        pass
+
+    @abc.abstractmethod
+    def _evaluate(self):
+        """Run the actual logic."""
+        pass
+
     def evaluate(self):
         """Evaluate the arguments and run something if needed."""
-        pass
+        self._args = self._base_parser.parse_args()
+
+        # make the arguments availible
+        for item in self._algorithms + self._functions:
+            item.set_args(self._args)
+
+        # the actual evaluations
+        self._evaluate()
