@@ -68,7 +68,7 @@ class Algorithm(base_item.BaseItem):
         cls._parser = base_parser.add_parser(
             cls.name(), help="Use {}.".format(cls.pretty_name()))
         cls._subparser = cls._parser.add_subparsers(
-            help="Use this Function.", dest="func")
+            help="The function you want to optimize.", dest="func")
         for function in functions_list:
             function.add_parser(cls._subparser)
 

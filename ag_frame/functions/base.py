@@ -127,8 +127,8 @@ class Function(base_item.BaseItem):
 
         :param parser: The top-level parser
         """
-        cls.parser = base_parser.add_parser(cls.name(),
-                                            help="Run this function.")
+        cls.parser = base_parser.add_parser(
+            cls.name(), help="Use {}.".format(cls.pretty_name()))
         cls.parser.add_argument("-d", "--dimensions", type=int,
                                 help="The number of dimensions.")
 
