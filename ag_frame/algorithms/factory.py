@@ -31,6 +31,8 @@ def algorithms_factory():
             try:
                 if issubclass(item, base.Algorithm):
                     item.is_implemented()
+                else:
+                    continue
             except (exceptions.AlgorithmsNotImplemented, TypeError):
                 continue
 
