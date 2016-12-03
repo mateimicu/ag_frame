@@ -7,6 +7,8 @@ import abc
 
 import six
 
+from ag_frame import exceptions
+
 
 @six.add_metaclass(abc.ABCMeta)
 class BaseRunner(object):
@@ -31,6 +33,11 @@ class BaseRunner(object):
         self.__add_functions_to_algorithms()
 
         self._args = None
+
+    @classmethod
+    def is_implemented(cls):
+        """If this class is implemented."""
+        raise exceptions.RunnersNotImplemented("Not Implemented.")
 
     def _get_name(self):
         """Get the name of this runner."""

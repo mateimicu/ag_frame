@@ -33,3 +33,8 @@ class FunctionNotImplemented(AGNotImplemented):
 class AlgorithmsNotImplemented(AGNotImplemented):
     """Exceptions for not implemented Algorithms."""
     pass
+
+
+class RunnersNotImplemented(AGNotImplemented):
+    """Exceptions for not implemented Algorithms."""
+    pass

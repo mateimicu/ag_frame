@@ -29,11 +29,16 @@ class RunAlgorithm(base.BaseRunner):
                                            subparsers,
                                            algorithms,
                                            functions)
-        self._name = "run_alg"
+        self._name = self._get_name()
 
     def _get_name(self):
         """Get the name of this runner."""
         return self.NAME
+
+    @classmethod
+    def is_implemented(cls):
+        """If this class is implemented."""
+        return True
 
     def _add_subparser(self):
         """Add the subparser for this runner."""
