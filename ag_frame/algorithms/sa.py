@@ -65,9 +65,9 @@ class SA(base.Algorithm):
             args_new = self.string_to_args(new)
             args_global_best = self.string_to_args(global_best)
 
-            f_new = function(*args_new)
-            f_global = function(*args_global_best)
-            if f_new < f_global:
+            f_new = function.fit(*args_new)
+            f_global = function.fit(*args_global_best)
+            if f_new > f_global:
                 global_best = new
             else:
                 probability = random.random()

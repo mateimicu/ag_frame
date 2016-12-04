@@ -5,7 +5,6 @@ Next Ascent Hill Climbing
 """
 from ag_frame.algorithms import base
 from ag_frame.algorithms import utils
-TRY = True
 
 
 class NAHC(base.Algorithm):
@@ -43,10 +42,10 @@ class NAHC(base.Algorithm):
             args_best = self.string_to_args(best)
             args_new = self.string_to_args(new)
 
-            f_best = function(*args_best)
-            f_new = function(*args_new)
+            f_best = function.fit(*args_best)
+            f_new = function.fit(*args_new)
 
-            if f_new < f_best:
+            if f_new > f_best:
                 best = new
 
         return self.string_to_args(best)

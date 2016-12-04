@@ -6,8 +6,6 @@ Steepest Ascent Hill Climbing
 from ag_frame.algorithms import base
 from ag_frame.algorithms import utils
 
-TRY = False
-
 
 class SAHC(base.Algorithm):
     """Steepest Ascent Hill Climbing."""
@@ -26,7 +24,6 @@ class SAHC(base.Algorithm):
 
     def execute(self, function):
         """The algorithm implementation."""
-        global TRY
         self.size_var = []
         self.domains = function.get_domain_restrictions
 
@@ -36,10 +33,6 @@ class SAHC(base.Algorithm):
 
         big_string = '0' * sum(self.size_var)
         big_string = utils.randomise_a_string(big_string)
-
-        if TRY:
-            print self.string_to_args(big_string)[0]
-            TRY = False
 
         best = big_string
         new = best
@@ -54,10 +47,10 @@ class SAHC(base.Algorithm):
                 args_best = self.string_to_args(best)
                 args_new = self.string_to_args(new)
 
-                f_best = function(*args_best)
-                f_new = function(*args_new)
+                f_best = function.fit(*args_best)
+                f_new = function.fit(*args_new)
 
-                if f_new < f_best:
+                if f_new > f_best:
                     best = new
                     found = True
             base_g = best

@@ -142,4 +142,4 @@ class Function(base_item.BaseItem):
 
     def fit(self, *args):
         """Return the fitness for this function."""
-        return 1 / (self(*args) + self(*self.local_mins))
+        return 1 / (self(*args) + self(*self.local_mins[0]))

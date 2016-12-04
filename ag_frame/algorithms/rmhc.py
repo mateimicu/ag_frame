@@ -53,10 +53,10 @@ class RMHC(base.Algorithm):
             args_best = self.string_to_args(best)
             args_new = self.string_to_args(new)
 
-            f_best = function(*args_best)
-            f_new = function(*args_new)
+            f_best = function.fit(*args_best)
+            f_new = function.fit(*args_new)
 
-            if f_new < f_best:
+            if f_new > f_best:
                 best = new  # get a new best
                 retry = self._args.random_try  # reset the retry
             else:

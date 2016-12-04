@@ -29,9 +29,9 @@ class Algorithm(base_item.BaseItem):
 
         Here we initialize an Algorithm with the proper informations.
         """
-        # TODO(mmicu): add more custom values for each alg
         self.precision = self._args.precision
         self.max_retry = self._args.max_retry
+        self.domains = None
 
     @classmethod
     def is_implemented(cls):
@@ -108,7 +108,7 @@ class Algorithm(base_item.BaseItem):
                 continue
 
             # Compera the global_best with the new generated best
-            if function(*best) < function(*global_best):
+            if function.fit(*best) > function.fit(*global_best):
                 global_best = best
             retry -= 1
         return global_best
