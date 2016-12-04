@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+Main entry point.
+"""
 from __future__ import print_function
-
 from ag_frame.algorithms import factory as a_factory
 from ag_frame.functions import factory as f_factory
 from ag_frame.runners import run_alg
