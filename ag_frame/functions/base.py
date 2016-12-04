@@ -139,3 +139,7 @@ class Function(base_item.BaseItem):
         restrictions for any argument. By default it does nothing.
         """
         pass
+
+    def fit(self, *args):
+        """Return the fitness for this function."""
+        return 1 / (self(*args) + self(*self.local_mins))
