@@ -41,15 +41,23 @@ class BitArray(base.BaseRepresentation):
         """Get the number of bits needed for an item."""
         return sum(self._size_var)
 
-    @classmethod
-    def add_parser(cls, base_parser):
-        """Add the informations about the representations to the cli."""
-        pass
-
     def encode(self, args):
         """Encode the arguments."""
         to_return = ""
-        # TODO(mmicu): Implement this
+        for index, arg in enumerate(args):
+            nr_bits = utils.get_nr_bits(self._domain_restricion[index],
+                                        self._precision)
+            domain_lenght = (self._domain_restricion[index][1]
+                             - self._domain_restricion[index][0])
+
+            num = (arg * (2 ** nr_bits - 1) -
+                   self._domain_restricion[index][0])
+            bit = int((num / domain_lenght))
+            str_bit = "{0:b}".format(bit)
+            if len(str_bit) < nr_bits:
+                str_bit = str_bit.zfill(nr_bits - len(str_bit))
+
+            to_return = to_return + str_bit
 
         return to_return
 

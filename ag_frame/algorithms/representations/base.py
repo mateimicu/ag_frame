@@ -9,11 +9,6 @@ import six
 
 from ag_frame import base_item
 
-# NOTE(mmicu): This is not that good of an idea,
-# we need to use mixin or something like that
-# to make sure the mutation and crossover are allowed on
-# this representation
-
 
 @six.add_metaclass(abc.ABCMeta)
 class BaseRepresentation(base_item.BaseItem):
@@ -32,11 +27,6 @@ class BaseRepresentation(base_item.BaseItem):
         :param nr_args: The number of arguments.
         """
         self._nr_args = nr_args
-
-    @classmethod
-    def add_parser(cls, base_parser):
-        """Add the informations about the representations to the cli."""
-        pass
 
     @abc.abstractmethod
     def encode(self, args):
