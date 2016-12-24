@@ -15,7 +15,7 @@ class BitArray(base.BaseRepresentation):
     COMBINATORIC = False
 
     # The name of the array
-    NAME = "bit_array"
+    _name = "bit_array"
 
     # pragma pylint: disable=unused-argument
     def __init__(self, nr_args, precision, domain_restriction):
@@ -28,6 +28,11 @@ class BitArray(base.BaseRepresentation):
         self._domain_restricion = domain_restriction
         self._size_var = self._get_size_var()
         self._nr_of_bits = self._get_nr_of_bits()
+
+    @classmethod
+    def is_implemented(cls):
+        """Check if the Clase is finnal."""
+        return True
 
     def _get_size_var(self):
         """Get the size of every variable."""

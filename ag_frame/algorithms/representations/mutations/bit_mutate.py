@@ -8,11 +8,10 @@ import random
 import six
 
 from ag_frame.algorithms.representations.mutations import base
-from ag_frame.algorithms import utils
 
 
 @six.add_metaclass(abc.ABCMeta)
-class BitMutation(base.Base):
+class BitMutation(base.BaseMutation):
     """Base Bit Mutate.
 
     Change a number of bits.
@@ -22,7 +21,7 @@ class BitMutation(base.Base):
     COMBINATORIC = False
 
     # The name of the array
-    NAME = "Base"
+    _name = "Base"
 
     # pragma pylint: disable=unused-argument
     def __init__(self, bits_to_mutate=1):
@@ -32,6 +31,11 @@ class BitMutation(base.Base):
         """
         self._bits_to_mutate = bits_to_mutate
 
+    @classmethod
+    def is_implemented(cls):
+        """Check if the Clase is finnal."""
+        return True
+
     def mutate(self, arg):
         """We will get a bite string and mutate a number of bits."""
 
@@ -40,9 +44,17 @@ class BitMutation(base.Base):
 
         # mask to keep track of the
         mask = [False for _ in range(len(arg))]
+        arg = list(arg)
         for _ in range(bits_to_mutate):
             # get a random index to mutate
             index = None
             while not index or not mask[index]:
                 index = random.randint(0, len(arg)-1)
-            utils.mutate(arg, index)
+                mask[index] = True
+
+            if arg[index] == '0':
+                arg[index] = '1'
+            elif arg[index] == '1':
+                arg[index] = '0'
+
+        return "".join(arg)

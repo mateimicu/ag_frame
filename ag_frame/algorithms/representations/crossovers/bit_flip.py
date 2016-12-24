@@ -12,23 +12,29 @@ from ag_frame.algorithms.representations.crossovers import base
 
 
 @six.add_metaclass(abc.ABCMeta)
-class BitCut(base.BaseCrossover):
+class BitFlip(base.BaseCrossover):
     """Base Crossover.
 
-    This crossover chooses a random N >= 0 <= min(len(arg1), len(args2)).
+    Each bit from a genome has the `ratio` as a chance to be swapped with
+    the other bit.
     """
 
     # If this is a combinatoric representation
     COMBINATORIC = False
 
     # The name of the array
-    NAME = "Base"
+    _name = "Bit Flip"
 
     # pragma pylint: disable=unused-argument
     def __init__(self, *args, **kwargs):
         """Initializa the arguments."""
-        super(BitCut, self).__init__(*args, **kwargs)
-        self._precision = kwargs.pop("precision", .5)
+        super(BitFlip, self).__init__(*args, **kwargs)
+        self._ratio = kwargs.pop("ration", .5)
+
+    @classmethod
+    def is_implemented(cls):
+        """Check if the Clase is finnal."""
+        return True
 
     def crossover(self, arg1, arg2):
         """Return a list with the new crossoverd items.
@@ -47,7 +53,7 @@ class BitCut(base.BaseCrossover):
         child2 = ""
 
         for index in range(max_len):
-            if random.random() < self._precision:
+            if random.random() < self._ratio:
                 # swap
                 child1 += arg2[index]
                 child2 += arg1[index]
