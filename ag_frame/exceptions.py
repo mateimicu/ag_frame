@@ -36,5 +36,25 @@ class AlgorithmsNotImplemented(AGNotImplemented):
 
 
 class RunnersNotImplemented(AGNotImplemented):
-    """Exceptions for not implemented Algorithms."""
+    """Exceptions for not implemented Runner."""
+    pass
+
+
+class RepresentationNotImplemented(AGNotImplemented):
+    """Exceptions for not implemented Representation."""
+    pass
+
+
+class MutationNotImplemented(AGNotImplemented):
+    """Exceptions for not implemented Mutation."""
+    pass
+
+
+class CrossoverNotImplemented(AGNotImplemented):
+    """Exceptions for not implemented Crossover."""
+    pass
+
+
+class SelectionNotImplemented(AGNotImplemented):
+    """Exceptions for not implemented Selection."""
     pass
