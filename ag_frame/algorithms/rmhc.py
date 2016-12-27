@@ -35,8 +35,9 @@ class RMHC(base.Algorithm):
             " for a single run.")
         cls._parser.set_defaults(random_try=100)
 
-    def execute(self, function):
+    def execute(self, index):
         """The algorithm implementation."""
+        function = self._function
         self.domains = function.get_domain_restrictions
 
         self._prepare_size_var(function)

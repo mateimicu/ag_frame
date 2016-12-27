@@ -22,8 +22,9 @@ class SAHC(base.Algorithm):
         """Check if the Clase is finnal."""
         return True
 
-    def execute(self, function):
+    def execute(self, index):
         """The algorithm implementation."""
+        function = self._function
         self.size_var = []
         self.domains = function.get_domain_restrictions
 

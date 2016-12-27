@@ -42,8 +42,9 @@ class SA(base.Algorithm):
             help="The step temperature (0, 1) (default 0.3)")
         cls._parser.set_defaults(temperature=.9, step=.3)
 
-    def execute(self, function):
+    def execute(self, index):
         """The algorithm implementation."""
+        function = self._function
         self.size_var = []
         self.domains = function.get_domain_restrictions
 

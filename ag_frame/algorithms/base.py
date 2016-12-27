@@ -4,6 +4,7 @@
 Base class for Algorithms.
 """
 import abc
+from multiprocessing.pool import ThreadPool
 
 import six
 
@@ -77,7 +78,12 @@ class Algorithm(base_item.BaseItem):
         cls._parser.add_argument(
             "-m", "--max_retry", type=int,
             help="How many times we should retry (100 default).")
-        cls._parser.set_defaults(max_retry=100, precision=30)
+
+        cls._parser.add_argument(
+            "--threads", type=int,
+            help="Number of threads ( defualt 30 )")
+        cls._parser.set_defaults(max_retry=100, precision=30,
+                                 threads=20)
 
     def _prepare_size_var(self, function):
         """Prepare the size of every var."""
@@ -97,27 +103,41 @@ class Algorithm(base_item.BaseItem):
         if not isinstance(function, base.Function):
             raise ValueError("We don't know this function %s.", function)
 
-        global_best = None
+        # set the function
+        self.add_function(function)
+
+        # global_best = None
         retry = self.max_retry
-        while retry > 0:
-            # Run the algorithm
-            best = self.execute(function)
+        results = []
+        try:
+            pool = ThreadPool(processes=self._args.threads)
+            for index in range(retry):
+                results.append(pool.apply_async(self.execute,
+                                                kwds={"index": index}))
 
-            if not global_best:
-                global_best = best
-                continue
+            results = [result.get() for result in results]
+        finally:
+            pool.terminate()
 
-            # Compera the global_best with the new generated best
-            if function.fit(*best) > function.fit(*global_best):
-                global_best = best
-            retry -= 1
-        return global_best
+        best = results.pop()
+        for item in results:
+            if function.fit(*item) > function.fit(*best):
+                best = item
+
+        return best
+
+    def add_function(self, function):
+        """Add the function for this run.
+
+        :param function: Set the function
+        """
+        self._function = function
 
     @abc.abstractmethod
-    def execute(self, function):
+    def execute(self, index):
         """This method will be called to run the algorithm.
 
-        :param function:
-            A `ag_frame.function.base.Function` instance.
+        :param index:
+            The index of the run.
         """
         pass

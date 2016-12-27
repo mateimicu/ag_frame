@@ -17,6 +17,7 @@ ALGORITHMS = [
     "nahc",
     "sahc",
     "sa",
+    "basic_ag",
 ]
 
 
