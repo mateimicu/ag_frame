@@ -22,6 +22,9 @@ class Function(base_item.BaseItem):
     _parser = None
     _subparser = None
 
+    # If it's a combinatoryc problem.
+    COMBINATORIC = False
+
     def __init__(self, nr_args, default_domain, local_mins):
         """Initialize a function.
 
