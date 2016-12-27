@@ -45,6 +45,10 @@ class BaseRepresentation(base_item.BaseItem):
         return cls._name
 
     @abc.abstractmethod
+    def get_random(self):
+        """Get a random genom."""
+
+    @abc.abstractmethod
     def encode(self, args):
         """Encode the arguments."""
 

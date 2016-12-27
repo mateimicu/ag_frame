@@ -21,7 +21,7 @@ class BitMutation(base.BaseMutation):
     COMBINATORIC = False
 
     # The name of the array
-    _name = "Base"
+    _name = "Bit Mutation"
 
     # pragma pylint: disable=unused-argument
     def __init__(self, bits_to_mutate=1):

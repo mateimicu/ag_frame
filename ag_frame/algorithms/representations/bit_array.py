@@ -18,13 +18,16 @@ class BitArray(base.BaseRepresentation):
     _name = "bit_array"
 
     # pragma pylint: disable=unused-argument
-    def __init__(self, nr_args, precision, domain_restriction):
+    def __init__(self, nr_args, precision):
         """Initializa the arguments.
 
         :param nr_args: The number of arguments.
         """
         super(BitArray, self).__init__(nr_args)
         self._precision = precision
+
+    def add_domains_restriction(self, domain_restriction):
+        """Add the domain restrictions."""
         self._domain_restricion = domain_restriction
         self._size_var = self._get_size_var()
         self._nr_of_bits = self._get_nr_of_bits()
@@ -45,6 +48,11 @@ class BitArray(base.BaseRepresentation):
     def _get_nr_of_bits(self):
         """Get the number of bits needed for an item."""
         return sum(self._size_var)
+
+    def get_random(self):
+        """Get a random genom."""
+        base_genom = "1" * sum(self._size_var)
+        return utils.randomise_a_string(base_genom)
 
     def encode(self, args):
         """Encode the arguments."""
