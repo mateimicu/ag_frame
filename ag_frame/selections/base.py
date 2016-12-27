@@ -9,7 +9,8 @@ import six
 
 from ag_frame import base_item
 from ag_frame import exceptions
-from ag_frame.functions import base
+from ag_frame.functions import base as base_function
+from ag_frame.algorithms.representations import base as base_repr
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -21,16 +22,24 @@ class BaseSelection(base_item.BaseItem):
 
     _name = "Basic Selection"
 
-    def __init__(self, selected_number, function, representaion, *kwargs):
+    def __init__(self, representaion, *kwargs):
         """Initialize an Selection algorithm.
 
-        :param selected_number: The number of genomes we want to select.
-        :param function: The function we use for selecting them.
         :param representaion: What representation is used.
         """
-        self._selected_number = selected_number
-        self._funcion = function
+        if not isinstance(representaion, base_repr.BaseRepresentation):
+            raise TypeError("This is not a representation!")
         self._representation = representaion
+
+    def add_function(self, function):
+        """Add the function in case
+
+        :param function: The function we use for selecting them.
+        """
+        if not isinstance(function, base_function.Function):
+            raise TypeError("This is not a function!")
+        self._function = function
+
 
     @classmethod
     def is_implemented(cls):
@@ -49,8 +58,5 @@ class BaseSelection(base_item.BaseItem):
 
     @abc.abstractmethod
     def select(self, population):
-        """Split the list with populations in two.
-
-        The first part will be the selected part, and the second one the rest.
-        """
+        """Select a cromozom and return the population."""
         pass

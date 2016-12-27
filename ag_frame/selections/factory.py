@@ -13,6 +13,7 @@ from ag_frame import exceptions
 
 PREFIX = "ag_frame.selections"
 SELECTIONS = [
+    "roata_norocului"
 ]
 
 
@@ -25,7 +26,7 @@ def selection_factory():
         for item in dir(module):
             item = getattr(module, item)
             try:
-                if issubclass(item, base.Algorithm):
+                if issubclass(item, base.BaseSelection):
                     item.is_implemented()
                 else:
                     continue

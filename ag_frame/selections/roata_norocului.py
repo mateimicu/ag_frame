@@ -13,13 +13,12 @@ class Wheel(base.BaseSelection):
 
     _name = "Wheel"
 
-    def __init__(self, function, representaion):
+    def __init__(self, representaion):
         """Initialize an Selection algorithm.
 
-        :param function: The function we use for selecting them.
         :param representaion: What representation is used.
         """
-        super(Wheel, self).__init__(function, representaion)
+        super(Wheel, self).__init__(representaion)
 
     @classmethod
     def is_implemented(cls):
@@ -28,7 +27,7 @@ class Wheel(base.BaseSelection):
 
     def select(self, population):
         """Select a cromozom and return the population."""
-        fit_per_item = [self._function(self._representation.decode(item)) for
+        fit_per_item = [self._function(*self._representation.decode(item)) for
                         item in population]
         total_fit = sum(fit_per_item)
 
@@ -45,6 +44,9 @@ class Wheel(base.BaseSelection):
         # item_chances[j] < random_item <= item_chances[j+1]
         for index in range(len(item_chances)-2):
             if item_chances[index] < random_item <= item_chances[index+1]:
-                item = population[item-1]
+                item = population[index-1]
 
-        return item, population.remove(item)
+        # remove selected item
+        population.remove(item)
+
+        return item, population
