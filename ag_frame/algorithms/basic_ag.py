@@ -200,7 +200,6 @@ class BaseAG(base.Algorithm):
         population = [self._representation.get_random() for _ in
                       range(function._nr_args)]
 
-        # print self._representation.decode(population[0])
         # first population
         self._add_population(info, 0, population)
 
