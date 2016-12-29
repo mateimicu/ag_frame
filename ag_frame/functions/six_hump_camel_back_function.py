@@ -41,8 +41,10 @@ class SixHumpCamelBackFunction(base.Function):
 
         :param parser: The top-level parser
         """
+        super(SixHumpCamelBackFunction, cls).add_parser(base_parser)
         cls.parser = base_parser.add_parser(cls.name(),
                                             help="Run this function.")
+        cls.parser.set_defaults(dimensions=2)
 
     def execute(self, *args):
         """This method return the value of this function for the given args.
