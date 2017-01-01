@@ -29,9 +29,9 @@ class Wheel(base.BaseSelection):
         """Select a cromozom and return the population."""
         fit_per_item = [self._function(*self._representation.decode(item)) for
                         item in population]
-        total_fit = sum(fit_per_item)
 
-        probability_per_item = [item_fit / float(total_fit)  for
+        total_fit = sum(fit_per_item)
+        probability_per_item = [item_fit / float(total_fit) for
                                 item_fit in fit_per_item]
 
         item_chances = [0]
