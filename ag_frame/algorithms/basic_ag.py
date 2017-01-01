@@ -164,13 +164,15 @@ class BaseAG(base.Algorithm):
         selected, the_rest = self._split_population(
             population, self._get_selected_number(population,
                                                   self._selection_crossover))
+
         # crossover
-        generated_items = []
+        generated_items_crossover = []
         while len(selected) >= 2:
             male, female = random.sample(selected, 2)
             selected.remove(male)
             selected.remove(female)
-            generated_items.extend(self._crossover.crossover(male, female))
+            generated_items_crossover.extend(
+                self._crossover.crossover(male, female))
 
         # if there is a impar number of selected items
         # add it back to the list
@@ -180,15 +182,16 @@ class BaseAG(base.Algorithm):
         selected, the_rest = self._split_population(
             the_rest, self._get_selected_number(population,
                                                 self._selection_mutation))
-        # crossover
-        generated_items = []
+        # mutation
+        generated_items_mutation = []
         for item in selected:
-            generated_items.append(self._mutation.mutate(item))
+            generated_items_mutation.append(self._mutation.mutate(item))
 
         # compute the population
         population = []
         population.extend(the_rest)
-        population.extend(generated_items)
+        population.extend(generated_items_crossover)
+        population.extend(generated_items_mutation)
 
         return population
 
