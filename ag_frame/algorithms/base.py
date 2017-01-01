@@ -109,16 +109,23 @@ class Algorithm(base_item.BaseItem):
         # global_best = None
         retry = self.max_retry
         results = []
-        try:
-            pool = ThreadPool(processes=self._args.threads)
+
+        if self._args.threads:
+            try:
+                pool = ThreadPool(processes=self._args.threads)
+                for index in range(retry):
+                    results.append(pool.apply_async(self.execute,
+                                                    kwds={"index": index}))
+
+                results = [result.get() for result in results]
+            finally:
+                pool.terminate()
+        else:
             for index in range(retry):
-                results.append(pool.apply_async(self.execute,
-                                                kwds={"index": index}))
+                results.append(self.execute(index=index))
 
-            results = [result.get() for result in results]
-        finally:
-            pool.terminate()
 
+        # get the best item
         best = results.pop()
         for item in results:
             if function.fit(*item) > function.fit(*best):
