@@ -56,5 +56,4 @@ class Wheel(base.BaseSelection):
         # remove selected item
         population.remove(item)
 
-
         return item, population
