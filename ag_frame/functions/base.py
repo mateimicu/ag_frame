@@ -22,10 +22,12 @@ class Function(base_item.BaseItem):
     _parser = None
     _subparser = None
 
+    _cache = {}
+
     # If it's a combinatoryc problem.
     COMBINATORIC = False
 
-    def __init__(self, nr_args, default_domain, local_mins):
+    def __init__(self, nr_args, default_domain, local_mins, **kwargs):
         """Initialize a function.
 
         Here we initialize a function with the proper informations.
@@ -81,7 +83,7 @@ class Function(base_item.BaseItem):
         """Return a list with all the domain restrictions."""
         return self._args_domain
 
-    def __call__(self, *args):
+    def __call__(self, *f_args):
         """This method return the value of this function for the given args.
 
         If the number of argument is lower then the expected needed numner, an
@@ -89,18 +91,22 @@ class Function(base_item.BaseItem):
         :param *args:
             The arguments of the function.
         """
-        if len(args) < self._nr_args:
+        if len(f_args) < self._nr_args:
             raise function_exceptions.ToFewArguments(function_name=self._name,
                                                      nr_args=self._nr_args,
-                                                     given_nr_args=len(args))
-        for index, val in enumerate(args):
+                                                     given_nr_args=len(f_args))
+        for index, val in enumerate(f_args):
             if not (self._args_domain[index][0] <= val
                     <= self._args_domain[index][1]):
                 raise function_exceptions.FunctionValueError(
                     function_name=self._name, arg_poz=index+1,
                     domain=self._args_domain[index])
 
-        return self.execute(*args)
+        if f_args not in self._cache:
+            rez = self.execute(*f_args)
+            self._cache[f_args] = rez
+
+        return self._cache[f_args]
 
     def add_specific_domain_restriction(self, arg, arg_domain):
         """Add a specific domain restriction for a specific arg.
@@ -145,4 +151,4 @@ class Function(base_item.BaseItem):
 
     def fit(self, *args):
         """Return the fitness for this function."""
-        return 1 / (self(*args) + self(*self.local_mins[0]))
+        return 1 / (self(*args) + self(*self.local_mins[0]) + 1)
