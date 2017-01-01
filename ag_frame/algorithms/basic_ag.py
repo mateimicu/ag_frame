@@ -35,6 +35,8 @@ class BaseAG(base.Algorithm):
         :param selection_mutation: The number of items to be selected for
                                    mutation
         :param generations:  How many generations we should evolve
+        :param dimension: The dimensions
+        :param dimension: The precision
         """
         super(BaseAG, self).__init__()
         self.domains = None
@@ -53,6 +55,8 @@ class BaseAG(base.Algorithm):
                                               self._args.selection_mutation)
         self._generations = kwargs.get("generations",
                                        self._args.generations)
+        dimension = kwargs.get("dimension", self._args.dimensions)
+        precision = kwargs.get("precision", self._args.precision)
 
         crossovers = cros_factory.crossover_factory()
         mutations = mut_factory.mutation_factory()
@@ -62,11 +66,12 @@ class BaseAG(base.Algorithm):
         for item in crossovers:
             if crossover_name == item.name():
                 self._crossover = item()
-
         for item in representations:
             if representation_name == item.name():
-                self._representation = item(self._args.dimensions,
-                                            self._args.precision)
+                # NOTE(mmicu): the dimension is know when we get the function
+                # eliminate this requirement
+                self._representation = item(dimension,
+                                            precision)
 
         for item in mutations:
             if mutation_name == item.name():
@@ -135,7 +140,6 @@ class BaseAG(base.Algorithm):
         :param function: Set the function
         """
         super(BaseAG, self).add_function(function)
-
         self._representation.add_domains_restriction(
             function.get_domain_restrictions)
         self._selection.add_function(function)
@@ -166,7 +170,7 @@ class BaseAG(base.Algorithm):
             male, female = random.sample(selected, 2)
             selected.remove(male)
             selected.remove(female)
-            generated_items.append(self._crossover.crossover(male, female))
+            generated_items.extend(self._crossover.crossover(male, female))
 
         # if there is a impar number of selected items
         # add it back to the list
