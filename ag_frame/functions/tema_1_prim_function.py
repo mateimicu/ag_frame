@@ -13,7 +13,7 @@ class Tema1Func(base.Function):
 
     _name = "Tema1Function"
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """Initialize this function.
 
         :param dimensions: The number of dimension ( The default one is 8 )

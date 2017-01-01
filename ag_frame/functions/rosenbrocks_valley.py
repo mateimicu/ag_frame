@@ -16,13 +16,14 @@ class RosenbrockValley(base.Function):
 
     _name = "Rosenbrock's valley"
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """Initialize this function."""
+        dimensions = kwargs.get("dimension", self._args.dimensions)
         local_mins = (
-            tuple([0 for _ in range(self._args.dimensions)]),
+            tuple([0 for _ in range(dimensions)]),
         )
         super(RosenbrockValley, self).__init__(
-            nr_args=self._args.dimensions, default_domain=(-2.048, 2.048),
+            nr_args=dimensions, default_domain=(-2.048, 2.048),
             local_mins=local_mins)
 
     @classmethod

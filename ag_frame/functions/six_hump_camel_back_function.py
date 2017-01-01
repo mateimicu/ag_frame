@@ -12,7 +12,7 @@ class SixHumpCamelBackFunction(base.Function):
     """Six-hump camel back function."""
     _name = "Six-hump camel back"
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         local_mins = (
             (-0.0898, 0.7126),
             (0.0898, -0.7126)

@@ -16,16 +16,17 @@ class RastriginsFunction(base.Function):
 
     _name = "Rastrigin's function"
 
-    def __init__(self,):
+    def __init__(self, **kwargs):
         """Initialize this function.
 
         :param dimensions: The number of dimension ( The default one is 6 )
         """
+        dimensions = kwargs.get("dimension", self._args.dimensions)
         local_mins = (
-            tuple([0 for _ in range(self._args.dimensions)]),
+            tuple([0 for _ in range(dimensions)]),
         )
         super(RastriginsFunction, self).__init__(
-            nr_args=self._args.dimensions, default_domain=(-5.12, 5.12),
+            nr_args=dimensions, default_domain=(-5.12, 5.12),
             local_mins=local_mins)
 
     @classmethod

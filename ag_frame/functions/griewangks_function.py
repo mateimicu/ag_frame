@@ -18,16 +18,17 @@ class GriewangksFunction(base.Function):
 
     _name = "Griewangk's function"
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """Initialize this function.
 
         :param dimensions: The number of dimension ( The default one is 8 )
         """
+        dimensions = kwargs.get("dimension", self._args.dimensions)
         local_mins = (
-            tuple([0 for _ in range(self._args.dimensions)]),
+            tuple([0 for _ in range(dimensions)]),
         )
         super(GriewangksFunction, self).__init__(
-            nr_args=self._args.dimensions, default_domain=(-600, 600),
+            nr_args=dimensions, default_domain=(-600, 600),
             local_mins=local_mins)
 
     @classmethod
