@@ -13,7 +13,8 @@ from ag_frame import exceptions
 
 PREFIX = "ag_frame.selections"
 SELECTIONS = [
-    "roata_norocului"
+    "roata_norocului",
+    "turneu",
 ]
 
 
